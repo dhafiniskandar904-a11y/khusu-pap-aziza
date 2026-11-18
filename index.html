@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♡ My Aesthetic Album ♡</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #ffe0f0 0%, #f0e6ff 50%, #e0f7ff 100%);
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Bintang-bintang lucu di background */
+  body::before {
+    content: '✿ ♡ ✧ ⋆ ✿ ♡ ✧ ⋆ ✿ ♡ ✧ ⋆';
+    position: fixed;
+    top: 10px;
+    left: 0;
+    width: 200%;
+    font-size: 24px;
+    color: rgba(255, 182, 213, 0.5);
+    letter-spacing: 30px;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '♡ ✿ ⋆ ✧ ♡ ✿ ⋆ ✧ ♡ ✿ ⋆ ✧';
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    width: 200%;
+    font-size: 24px;
+    color: rgba(200, 182, 255, 0.5);
+    letter-spacing: 30px;
+    animation: floatReverse 25s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes float {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes floatReverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: #ff8fc7;
+    text-shadow: 3px 3px 0 #fff, 5px 5px 10px rgba(255, 143, 199, 0.3);
+    margin-bottom: 10px;
+    animation: wiggle 3s ease-in-out infinite;
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+  }
+
+  .subtitle {
+    color: #a78bfa;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+  }
+
+  /* Tombol Upload */
+  .upload-section {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .upload-btn {
+    background: linear-gradient(135deg, #ffb6d9 0%, #d8b4fe 100%);
+    color: #fff;
+    border: 3px dashed #fff;
+    padding: 16px 32px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 143, 199, 0.4);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .upload-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(255, 143, 199, 0.6);
+  }
+
+  .upload-btn:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Counter foto */
+  .photo-count {
+    text-align: center;
+    color: #a78bfa;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+
+  .photo-card {
+    background: #fff;
+    padding: 10px 10px 40px 10px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(255, 182, 213, 0.4);
+    position: relative;
+    transition: all 0.3s ease;
+    animation: popIn 0.5s ease backwards;
+  }
+
+  .photo-card:nth-child(odd) { transform: rotate(-2deg); }
+  .photo-card:nth-child(even) { transform: rotate(2deg); }
+
+  .photo-card:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 12px 25px rgba(255, 143, 199, 0.6);
+    z-index: 2;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.5) rotate(0deg); }
+    to { opacity: 1; }
+  }
+
+  .photo-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .photo-card .caption {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 0.85rem;
+    color: #ff8fc7;
+  }
+
+  .delete-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ff8fc7;
+    color: #fff;
+    border: 2px solid #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(255, 143, 199, 0.5);
+    transition: all 0.2s;
+    font-weight: bold;
+  }
+
+  .delete-btn:hover {
+    background: #ff5fa2;
+    transform: scale(1.15) rotate(90deg);
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #c4b5fd;
+  }
+
+  .empty-state .icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    display: block;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .empty-state p {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  /* Modal preview */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 182, 213, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal.active {
+    display: flex;
+    animation: fadeIn 0.3s;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal img {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 20px;
+    border: 6px solid #fff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #fff;
+    color: #ff8fc7;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-weight: bold;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #ffb6d9, #d8b4fe);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(255, 143, 199, 0.5);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 200;
+    opacity: 0;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 20px;
+    color: #a78bfa;
+    font-weight: 700;
+    display: none;
+  }
+
+  .loading.active { display: block; }
+
+  .loading::after {
+    content: '♡';
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 500px) {
+    body { padding: 15px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .photo-card img { height: 130px; }
+    .upload-btn { padding: 14px 24px; font-size: 0.9rem; }
+    .photo-card .caption { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>♡ Album khusus pap cantik azizah ♡</h1>
+    <p class="subtitle">✦ kumpulan pap canntik azizah ✦</p>
+  </header>
+
+  <div class="upload-section">
+    <button class="upload-btn" id="uploadBtn">
+      📸 Upload Foto
+    </button>
+    <button class="upload-btn" id="cameraBtn" style="background: linear-gradient(135deg, #a7f3d0, #93c5fd);">
+      🌸 Ambil Foto
+    </button>
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*" multiple hidden>
+  <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+
+  <p class="photo-count" id="photoCount">0 kenangan tersimpan ♡</p>
+
+  <div class="loading" id="loading">Menyimpan kenangan</div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <div class="empty-state" id="emptyState">
+    <span class="icon">🌸</span>
+    <p>Belum ada foto nih...</p>
+    <p style="font-size: 0.85rem; margin-top: 8px;">♡</p>
+  </div>
+</div>
+
+<!-- Modal Preview -->
+<div class="modal" id="modal">
+  <button class="modal-close" id="modalClose">✕</button>
+  <img id="modalImg" src="" alt="Preview">
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">Foto tersimpan otomatis! ♡</div>
+
+<script>
+// ============ KONFIGURASI ============
+const STORAGE_KEY = 'aesthetic_album_photos_v1';
+const MAX_DIMENSION = 800; // kompres gambar agar localStorage tidak penuh
+const JPEG_QUALITY = 0.75;
+
+// ============ ELEMEN ============
+const gallery = document.getElementById('gallery');
+const emptyState = document.getElementById('emptyState');
+const photoCount = document.getElementById('photoCount');
+const fileInput = document.getElementById('fileInput');
+const cameraInput = document.getElementById('cameraInput');
+const uploadBtn = document.getElementById('uploadBtn');
+const cameraBtn = document.getElementById('cameraBtn');
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+const modalClose = document.getElementById('modalClose');
+const toast = document.getElementById('toast');
+const loading = document.getElementById('loading');
+
+// ============ STATE ============
+let photos = [];
+
+// ============ LOAD DARI LOCALSTORAGE ============
+function loadPhotos() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    photos = saved ? JSON.parse(saved) : [];
+  } catch (e) {
+    console.error('Gagal load:', e);
+    photos = [];
+  }
+  renderGallery();
+}
+
+// ============ SIMPAN KE LOCALSTORAGE ============
+function savePhotos() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
+    showToast('Foto tersimpan otomatis! ♡');
+  } catch (e) {
+    console.error('Gagal simpan:', e);
+    showToast('⚠️ Penyimpanan penuh, hapus beberapa foto');
+  }
+}
+
+// ============ RENDER GALLERY ============
+function renderGallery() {
+  gallery.innerHTML = '';
+  
+  if (photos.length === 0) {
+    emptyState.style.display = 'block';
+    photoCount.textContent = '0 kenangan tersimpan ♡';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  photoCount.textContent = `${photos.length} kenangan tersimpan ♡`;
+
+  photos.forEach((photo, index) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.style.animationDelay = (index * 0.05) + 's';
+
+    const img = document.createElement('img');
+    img.src = photo.data;
+    img.alt = 'Foto album';
+    img.loading = 'lazy';
+    img.addEventListener('click', () => openModal(photo.data));
+
+    const caption = document.createElement('div');
+    caption.className = 'caption';
+    caption.textContent = photo.date || '♡';
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'delete-btn';
+    delBtn.innerHTML = '✕';
+    delBtn.title = 'Hapus foto';
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deletePhoto(index);
+    });
+
+    card.appendChild(img);
+    card.appendChild(caption);
+    card.appendChild(delBtn);
+    gallery.appendChild(card);
+  });
+}
+
+// ============ TAMBAH FOTO ============
+async function addPhotos(files) {
+  if (!files || files.length === 0) return;
+
+  loading.classList.add('active');
+
+  for (const file of files) {
+    if (!file.type.startsWith('image/')) continue;
+    
+    try {
+      const compressedData = await compressImage(file);
+      photos.push({
+        data: compressedData,
+        date: new Date().toLocaleDateString('id-ID', { 
+          day: 'numeric', month: 'short', year: 'numeric' 
+        }),
+        timestamp: Date.now()
+      });
+    } catch (err) {
+      console.error('Gagal proses gambar:', err);
+    }
+  }
+
+  loading.classList.remove('active');
+  savePhotos();
+  renderGallery();
+}
+
+// ============ KOMPRES GAMBAR ============
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        
+        // Resize jika terlalu besar
+        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIMENSION) / width);
+            width = MAX_DIMENSION;
+          } else {
+            width = Math.round((width * MAX_DIMENSION) / height);
+            height = MAX_DIMENSION;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        try {
+          resolve(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
+        } catch (err) {
+          reject(err);
+        }
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ============ HAPUS FOTO ============
+function deletePhoto(index) {
+  if (confirm('Hapus foto ini? 🥺')) {
+    photos.splice(index, 1);
+    savePhotos();
+    renderGallery();
+  }
+}
+
+// ============ MODAL PREVIEW ============
+function openModal(src) {
+  modalImg.src = src;
+  modal.classList.add('active');
+}
+
+modalClose.addEventListener('click', () => modal.classList.remove('active'));
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.classList.remove('active');
+});
+
+// ============ TOAST ============
+let toastTimer;
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ============ EVENT LISTENER ============
+uploadBtn.addEventListener('click', () => fileInput.click());
+cameraBtn.addEventListener('click', () => cameraInput.click());
+
+fileInput.addEventListener('change', (e) => {
+  addPhotos(e.target.files);
+  e.target.value = '';
+});
+
+cameraInput.addEventListener('change', (e) => {
+  addPhotos(e.target.files);
+  e.target.value = '';
+});
+
+// ============ INIT ============
+loadPhotos();
+</script>
+
+</body>
+</html>
